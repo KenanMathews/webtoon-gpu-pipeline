@@ -1,0 +1,24 @@
+# Never push assets/data — datasets, images, captions, checkpoints, models, logs
+data/
+panels/
+work/
+test_models/
+wd14_tagger_model/
+*.safetensors
+*.ckpt
+*.log
+
+# Convention: any local-only data artifact (labels, metadata, captions, etc.)
+# gets a "local." prefix so it's caught here regardless of where it lands —
+# e.g. local.labels.json, local.metadata.json
+**/local.*
+
+# Python / venv
+.venv/
+__pycache__/
+*.pyc
+
+# Editor / OS cruft
+.claude/
+.vscode/
+.DS_Store

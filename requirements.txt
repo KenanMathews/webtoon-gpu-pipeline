@@ -1,0 +1,13 @@
+# Labeling kit
+opencv-python-headless
+numpy
+
+# WD14 auto-tagging (optional `tag` stage)
+onnx
+onnxruntime
+
+# Control panel (Flask app, see docs/superpowers/specs/2026-06-07-gpu-control-panel-design.md)
+flask
+
+# sd-scripts (Kohya) is installed separately from its own repo + requirements.txt,
+# and PyTorch should be installed matching your GPU's CUDA version.

@@ -45,6 +45,12 @@ python run.py review --img panels --trigger mywebtoon
 
 # 4. turn your labels into Kohya captions
 python run.py emit --img panels --trigger mywebtoon --json labels_edited.json
+
+# 5. bundle into a <repeats>_<trigger> folder + zip, ready to upload
+#    to the GPU control panel's "Upload Dataset"
+python run.py package --img panels --trigger mywebtoon --repeats 5
+# -> work/5_mywebtoon/      (Kohya-format folder: images + .txt captions)
+# -> work/5_mywebtoon.zip   (upload this)
 ```
 
 ### If you have raw author PAGES (long vertical strips)
@@ -64,7 +70,7 @@ python run.py emit   --img dataset/6_mywebtoon --trigger mywebtoon --json labels
 - Trim `tags` to ~10-20 so scene_type/character/background dominate the signal.
 
 ## Files
-- `run.py`          one-shot runner (prep / tag / review / emit)
+- `run.py`          one-shot runner (prep / tag / review / emit / package)
 - `prep_webtoon.py` join author pages -> split into panels
 - `label_panels.py` build labels.json + review.html, emit Kohya captions
 - `control_panel/`  Flask app for running training/generation on a rented GPU

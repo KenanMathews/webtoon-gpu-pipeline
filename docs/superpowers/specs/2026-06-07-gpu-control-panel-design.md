@@ -101,6 +101,11 @@ All routes except `/api/login` require an authenticated session
 - `POST /api/datasets` — upload a `.zip`; server extracts to
   `work/datasets/<name>/` and validates it contains
   `<repeats>_<trigger>`-style folders (Kohya convention) before accepting it.
+  This is exactly the shape produced by the local labeling kit's
+  `run.py package` stage (`tag → review → emit → package`), which bundles
+  auto-tagged, human-reviewed image+caption pairs into a `<repeats>_<trigger>`
+  folder and zips it — so the hand-off from local labeling to remote training
+  is "run `package`, drag the zip into Upload Dataset," no manual reshuffling.
 - `GET /api/datasets` — list available datasets.
 - `POST /api/models/download` — body `{url, filename}`; enqueues a
   `download_model` job that streams the file (e.g. a Civitai direct-download
@@ -226,7 +231,10 @@ since they're harmless no-ops on Linux.
 Before deploying to the rental box, smoke-test the whole flow locally:
 
 1. Log in with the shared password.
-2. Upload a small dataset zip (e.g. the existing 15-pair test dataset).
+2. Upload a small dataset zip — produced via `run.py package --img panels
+   --trigger mywebtoon --repeats 5 --out work` on a small subset (e.g. the
+   existing 15-pair test dataset), which yields `work/5_mywebtoon.zip` in
+   exactly the shape the upload endpoint expects.
 3. Use the "Download Base Model" flow to fetch a small/quick-to-grab SDXL
    checkpoint first (to validate the `download_model` job end-to-end without
    waiting on a multi-GB Illustrious-XL download), then separately validate
